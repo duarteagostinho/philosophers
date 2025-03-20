@@ -22,6 +22,9 @@ typedef struct s_philo
 {
   int philosophers;
   int forks;
+  int eat_time;
+  int sleep_time;
+  int die_time;
 }   t_philo;
 
 int ft_atoi(char *str);
