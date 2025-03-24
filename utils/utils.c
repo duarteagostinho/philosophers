@@ -6,18 +6,11 @@
 /*   By: duandrad <duandrad@student.42lisboa.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/19 20:01:39 by duandrad          #+#    #+#             */
-/*   Updated: 2025/03/19 20:01:57 by duandrad         ###   ########.fr       */
+/*   Updated: 2025/03/24 16:00:23 by duandrad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "header.h"
-
-t_philo *philo(void)
-{
-  static t_philo  g;
-
-  return (&g);
-}
+#include "../philo.h"
 
 int ft_strlen(char *str)
 {
@@ -65,4 +58,18 @@ void  ft_putstr(char *str)
     write(1, &str[i], 1);
     i++;
   }
+}
+
+bool ft_isdigit(char *str)
+{
+  int   i;
+
+  i = 0;
+  while (str[i])
+  {
+    if (!(str[i] >= '0' && str[i] <= '9'))
+          return (false);
+    i++;
+  }
+  return (true);
 }
