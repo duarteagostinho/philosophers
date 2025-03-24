@@ -62,4 +62,9 @@ bool  ft_isdigit(char *str);
 int check_4args(char *philos, char *die, char *eat, char *sleep);
 int check_5args(char *philos, char *die, char *eat, char *sleep, char *opt);
 
+/*INIT*/
+int	init_all(int ac, char **av, t_data *data);
+
+
+void	loop(t_data *data);
 #endif

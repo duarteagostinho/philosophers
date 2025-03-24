@@ -36,8 +36,8 @@ int main(int ac, char **av)
 
 	if (checker(ac, av) == true)
 	{
-		if (ac == 4)
-		if (ac == 5)
+		init_all()
+		loop()
 	}
 	else
 		ft_putstr("Invalid number of arguments\n");

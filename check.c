@@ -14,14 +14,16 @@
 
 int check_4args(char *philos, char *die, char *eat, char *sleep)
 {
+	int	nr_of_philos;
+
 	if (!ft_isdigit(philos) || !ft_isdigit(die) || !ft_isdigit(eat)
 		|| !ft_isdigit(sleep))
 	{
 		printf("Invalid parameters\n");
 		return (1);
 	}
-	philos = ft_atoi(philos);
-	if (!(philos > 0 && philos <= 200))
+	nr_of_philos = ft_atoi(philos);
+	if (!(nr_of_philos >= 1 && nr_of_philos <= 200))
 	{
 		printf("Invaldid number of philos\n");
 		return (1);
@@ -31,17 +33,17 @@ int check_4args(char *philos, char *die, char *eat, char *sleep)
 
 int check_5args(char *philos, char *die, char *eat, char *sleep, char *opt)
 {
-	int	philos;
+	int	nr_of_philos;
 
-	philos = 0;
+	nr_of_philos = 0;
 	if (!ft_isdigit(philos) || !ft_isdigit(die) || !ft_isdigit(eat)
 		|| !ft_isdigit(sleep) || !ft_isdigit(opt))
 	{
 		printf("Invalid parameters\n");
 		return (1);
 	}
-	philos = ft_atoi(philos);
-	if (!(philos > 0 && philos <= 200))
+	nr_of_philos = ft_atoi(philos);
+	if (!(nr_of_philos > 0 && nr_of_philos <= 200))
 	{
 		printf("Invaldid number of philos\n");
 		return (1);
