@@ -6,7 +6,7 @@
 /*   By: duandrad <duandrad@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/24 19:30:39 by duandrad          #+#    #+#             */
-/*   Updated: 2025/03/24 19:48:05 by duandrad         ###   ########.fr       */
+/*   Updated: 2025/03/25 13:46:48 by duandrad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,21 +20,14 @@ long	get_time(void)
 	return ((unsigned int)(tv.tv_sec * 1000) + (tv.tv_usec / 1000));
 }
 
-void	loop(t_data *data)
+void	eating(t_data *data)
 {
-	int	i;
-	int	j;
-
-	j = 1;
-	i = 0;
-	while (1)
-	{
-		while (i < data->meals_nb)
-		{
-			printf("%d Philosopher %d is thinking\n", get_time(), data->philos[j]);
-			j++;
-			i++;
-		}
-		break;
-	}
+	
+}
+void	pick_forks(t_philo *philo)
+{
+  pthread_mutex_lock(&philo->l_fork);
+  printf("philo %d has taken a fork\n")
+  
+  
 }

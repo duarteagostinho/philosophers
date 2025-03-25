@@ -40,8 +40,8 @@ typedef struct s_data
 {
 	pthread_t		*tid;
 	int				philo_num;
-	int				meals_nb;
-	int				dead;
+	int				meals_nb; 
+  bool				dead;
 	int				finished;
 	t_philo			*philos;
 	unsigned int	death_time;
@@ -65,6 +65,4 @@ int check_5args(char *philos, char *die, char *eat, char *sleep, char *opt);
 /*INIT*/
 int	init_all(int ac, char **av, t_data *data);
 
-
-void	loop(t_data *data);
 #endif
