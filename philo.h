@@ -20,7 +20,7 @@
 # include <sys/time.h>
 # include <stdbool.h>
 
-struct	s_data; 
+struct	s_data;
 
 typedef struct s_philo
 {
@@ -34,14 +34,14 @@ typedef struct s_philo
 	pthread_mutex_t	lock;
 	pthread_mutex_t	*r_fork;
 	pthread_mutex_t	*l_fork;
-} t_philo;
+}	t_philo;
 
 typedef struct s_data
 {
 	pthread_t		*tid;
 	int				philo_num;
-	int				meals_nb; 
-  bool				dead;
+	int				meals_nb;
+	bool			dead;
 	int				finished;
 	t_philo			*philos;
 	unsigned int	death_time;
@@ -51,18 +51,16 @@ typedef struct s_data
 	pthread_mutex_t	*forks;
 	pthread_mutex_t	lock;
 	pthread_mutex_t	write;
-} t_data;
-
+}	t_data;
 
 /*UTILS*/
-int   ft_atoi(char *str);
-int   ft_strlen(char *str);
-void  ft_putstr(char *str);
-bool  ft_isdigit(char *str);
-int check_4args(char *philos, char *die, char *eat, char *sleep);
-int check_5args(char *philos, char *die, char *eat, char *sleep, char *opt);
-
+int		ft_atoi(char *str);
+int		ft_strlen(char *str);
+void	ft_putstr(char *str);
+bool	ft_isdigit(char *str);
+bool	checker(int ac, char **av);
+long	get_time(void);
 /*INIT*/
-int	init_all(int ac, char **av, t_data *data);
+bool		init_all(int ac, char **av, t_data *data);
 
 #endif

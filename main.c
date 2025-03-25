@@ -12,33 +12,17 @@
 
 #include "philo.h"
 
-bool	checker(int ac, char **av)
+int	main(int ac, char **av)
 {
+	t_data	*data;
 	bool	check;
 
-	check = false;
-	if(ac == 4 || ac == 5)
+	printf("%ld\n", get_time());
+	if (checker(ac, av) == true)
 	{
-		if (ac == 4)
-			check += check_4args(av[1], av[2], av[3], av[4]);
-		if (ac == 5)
-			check += check_5args(av[1], av[2], av[3], av[4], av[5]);
-		if (!check)
-			return (false);
+		init_all(ac, av, data);
+		loop();
 	}
 	else
 		printf("Invalid number of arguments\n");
-	return (check);
-}
-int main(int ac, char **av)
-{
-	bool	check;
-
-	if (checker(ac, av) == true)
-	{
-		init_all()
-		loop()
-	}
-	else
-		ft_putstr("Invalid number of arguments\n");
 }

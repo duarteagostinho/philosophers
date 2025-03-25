@@ -12,41 +12,42 @@
 
 #include "philo.h"
 
-int check_4args(char *philos, char *die, char *eat, char *sleep)
+bool	check_args(char **av, bool optional)
 {
 	int	nr_of_philos;
 
-	if (!ft_isdigit(philos) || !ft_isdigit(die) || !ft_isdigit(eat)
-		|| !ft_isdigit(sleep))
+	if (optional == true)
+	{
+		if (!ft_isdigit(av[5]))
+		{
+			printf("Invalid parameter\n");
+			return (false);
+		}
+	}
+	if (!ft_isdigit(av[1]) || !ft_isdigit(av[2]) || !ft_isdigit(av[3])
+		|| !ft_isdigit(av[4]))
 	{
 		printf("Invalid parameters\n");
-		return (1);
+		return (false);
 	}
-	nr_of_philos = ft_atoi(philos);
+	nr_of_philos = ft_atoi(av[1]);
 	if (!(nr_of_philos >= 1 && nr_of_philos <= 200))
 	{
 		printf("Invaldid number of philos\n");
-		return (1);
+		return (false);
 	}
-	return (0);
+	return (true);
 }
 
-int check_5args(char *philos, char *die, char *eat, char *sleep, char *opt)
+bool	checker(int ac, char **av)
 {
-	int	nr_of_philos;
-
-	nr_of_philos = 0;
-	if (!ft_isdigit(philos) || !ft_isdigit(die) || !ft_isdigit(eat)
-		|| !ft_isdigit(sleep) || !ft_isdigit(opt))
+	if (ac == 4)
+		return (check_args(av, false));
+	else if (ac == 5)
+		return (check_args(av, true));
+	else
 	{
-		printf("Invalid parameters\n");
-		return (1);
+		printf("Invalid number of arguments\n");
+		return (false);
 	}
-	nr_of_philos = ft_atoi(philos);
-	if (!(nr_of_philos > 0 && nr_of_philos <= 200))
-	{
-		printf("Invaldid number of philos\n");
-		return (1);
-	}
-	return (0);
 }

@@ -48,18 +48,6 @@ int ft_atoi(char *str)
   return (result * sign);
 }
 
-void  ft_putstr(char *str)
-{
-  int i;
-
-  i = 0;
-  while(str[i])
-  {
-    write(1, &str[i], 1);
-    i++;
-  }
-}
-
 bool ft_isdigit(char *str)
 {
   int   i;
@@ -72,4 +60,13 @@ bool ft_isdigit(char *str)
     i++;
   }
   return (true);
+}
+
+void	print_message(char *message, t_philo *philo)
+{
+	unsigned int	time;
+
+	time = get_time();
+	pthread_mutex_lock(&philo->data->write);
+	printf("%d %s\n", philo->id, message);
 }
