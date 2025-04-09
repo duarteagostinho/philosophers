@@ -6,7 +6,7 @@
 /*   By: duandrad <duandrad@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/25 20:04:41 by duandrad          #+#    #+#             */
-/*   Updated: 2025/04/09 18:49:50 by duandrad         ###   ########.fr       */
+/*   Updated: 2025/04/09 19:02:46 by duandrad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,10 +25,17 @@ void	*supervisor(void *pt)
 		{
 			philo->data->dead = 1;
 			print_message("has died", philo->id);
-			if (philo->eat_cont == philo->data->meals_nb)
-			philo->data->finished = 1;
+		}
+		if (philo->eat_cont == philo->data->meals_nb)
+		{
+			pthread_mutex_lock(&philo->data->lock);
+			philo->data->finished++;
+			philo->eat_cont++;
+			pthread_mutex_unlock(&philo->data->lock);
+		}
 		pthread_mutex_unlock(&philo->lock);
 	}
+	return (NULL);
 }
 
 void	*monitor(void *pt)

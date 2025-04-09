@@ -6,7 +6,7 @@
 /*   By: duandrad <duandrad@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/08 14:42:45 by duandrad          #+#    #+#             */
-/*   Updated: 2025/04/09 18:49:23 by duandrad         ###   ########.fr       */
+/*   Updated: 2025/04/09 19:10:34 by duandrad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,8 +30,8 @@ void	print_message(char *message, t_philo *philo)
 {
 	unsigned int	time;
 
-	time = get_time();
 	pthread_mutex_lock(&philo->data->write);
-	printf("Philo %d %s\n", philo->id, message);
+	time = get_time() - philo->data->start_time;
+	printf("Philo %d %s at %u\n", philo->id, message, time);
 	pthread_mutex_unlock(&philo->data->write);
 }
