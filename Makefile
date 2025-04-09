@@ -1,5 +1,5 @@
 NAME = philo
-SRCS = utils/utils2.c utils/utils.c check.c init.c main.c mods.c routine.c
+SRCS = utils/utils2.c utils/utils.c check.c init.c main.c mods.c actions.c
 OBJS = $(SRCS:.c=.o)
 FLAGS = -Wall -Werror -Wextra -g
 INCLUDES = header.h

@@ -59,6 +59,7 @@ int			ft_strlen(char *str);
 bool		ft_isdigit(char *str);
 bool		checker(int ac, char **av);
 size_t		get_time(void);
+void	print_message(char *message, t_philo *philo);
 
 /*INIT*/
 bool		init_all(int ac, char **av, t_data *data);
