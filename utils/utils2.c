@@ -1,33 +1,36 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   routine.c                                          :+:      :+:    :+:   */
+/*   utils2.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: duandrad <duandrad@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/03/24 19:30:39 by duandrad          #+#    #+#             */
-/*   Updated: 2025/04/08 14:44:24 by duandrad         ###   ########.fr       */
+/*   Created: 2025/04/08 14:42:45 by duandrad          #+#    #+#             */
+/*   Updated: 2025/04/08 17:18:06 by duandrad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "philo.h"
+#include "../philo.h"
 
-void	pick_forks(t_philo *philo)
+void	ft_usleep(size_t ms)
 {
-	pthread_mutex_lock(philo->l_fork);
-	pthread_mutex_lock(philo->r_fork);
-
+	
 }
 
-void	eating(t_philo *philo)
+size_t	get_time(void)
 {
-	philo->eating = 1;
-	usleep(100);
+	struct timeval	time;
+
+	if (gettimeofday(&time, NULL) == -1)
+		write(2, "gettimeofday() error\n", 22);
+	return (time.tv_sec * 1000 + time.tv_usec / 1000);
 }
 
-void	drop_forks(t_philo *philo)
+void	print_message(char *message, t_philo *philo)
 {
-	philo->eating = 0;
-	pthread_mutex_unlock(philo->l_fork);
-	pthread_mutex_unlock(philo->r_fork);
+	unsigned int	time;
+
+	time = get_time();
+	pthread_mutex_lock(&philo->data->write);
+	printf("%d %s\n", philo->id, message);
 }

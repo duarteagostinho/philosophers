@@ -62,11 +62,3 @@ bool ft_isdigit(char *str)
   return (true);
 }
 
-void	print_message(char *message, t_philo *philo)
-{
-	unsigned int	time;
-
-	time = get_time();
-	pthread_mutex_lock(&philo->data->write);
-	printf("%d %s\n", philo->id, message);
-}

@@ -14,14 +14,13 @@
 
 int	main(int ac, char **av)
 {
-	t_data	*data;
+	t_data	data;
 	bool	check;
 
-	printf("%ld\n", get_time());
-	if (checker(ac, av) == true)
+	if (ac == 6 || ac == 5)
 	{
-		init_all(ac, av, data);
-		loop();
+		init_all(ac, av, &data);
+		printf("everything was init correctly!\n");
 	}
 	else
 		printf("Invalid number of arguments\n");

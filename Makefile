@@ -1,5 +1,5 @@
 NAME = philo
-SRCS = $(wildcard *.c)
+SRCS = utils/utils2.c utils/utils.c check.c init.c main.c mods.c routine.c
 OBJS = $(SRCS:.c=.o)
 FLAGS = -Wall -Werror -Wextra -g
 INCLUDES = header.h
@@ -7,18 +7,19 @@ INCLUDES = header.h
 all: $(NAME)
 
 $(NAME): $(OBJS)
-	cc $(FLAGS) $(OBJS) -o $(NAME)
+	@cc $(FLAGS) $(OBJS) -o $(NAME)
+	@echo "COMPILING FILES"
 
 %.o: %.c $(INCLUDES)
-	cc $(FLAGS) -c $< -o $@
+	@cc $(FLAGS) -c $< -o $@
 
 clean:
-	rm -rf $(OBJS)
+	@rm -rf $(OBJS)
+	@echo "REMOVING FILES"
 
 fclean: clean
-	rm -rf $(NAME)
+	@rm -rf $(NAME)
 
 re: fclean all
 
 .PHONY: all clean fclean re
-
