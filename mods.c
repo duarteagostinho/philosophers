@@ -6,7 +6,7 @@
 /*   By: duandrad <duandrad@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/25 20:04:41 by duandrad          #+#    #+#             */
-/*   Updated: 2025/04/09 20:17:34 by duandrad         ###   ########.fr       */
+/*   Updated: 2025/04/10 19:33:17 by duandrad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ void	*monitor(void *pt)
 	t_philo	*philo;
 
 	philo = (t_philo *)pt;
-	while (philo->data->dead == 0)
+	while (!philo->data->dead)
 	{
 		pthread_mutex_lock(&philo->lock);
 		if (philo->data->finished >=  philo->data->philo_num)
@@ -55,8 +55,18 @@ void	*monitor(void *pt)
 
 void	*routine(void *pt)
 {
-	while (1)
+	t_philo	*philo;
+
+	philo = (t_philo *)pt;
+	philo->time_to_die = get_time() + philo->data->death_time;
+	pthread_create(&philo->thread, NULL, &supervisor, (void*)philo);
+		return ((void *)1);
+	while (philo->data->dead == 0)
 	{
-		
+		eat(philo);
+		print_message("is thinking", philo);
 	}
+	if (pthread_join(&philo->thread, NULL))
+		return ((void*)1);
+	return (NULL);
 }

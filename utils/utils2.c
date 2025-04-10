@@ -6,15 +6,19 @@
 /*   By: duandrad <duandrad@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/08 14:42:45 by duandrad          #+#    #+#             */
-/*   Updated: 2025/04/09 19:57:54 by duandrad         ###   ########.fr       */
+/*   Updated: 2025/04/10 19:23:39 by duandrad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../philo.h"
 
 void	ft_usleep(size_t ms)
-{	
-	
+{
+	size_t	start;
+
+	start = get_time();
+	if ((get_time() - start) < ms)
+		usleep(ms / 10);
 }
 
 size_t	get_time(void)
@@ -32,6 +36,7 @@ void	print_message(char *message, t_philo *philo)
 
 	pthread_mutex_lock(&philo->data->write);
 	time = get_time() - philo->data->start_time;
-	printf("Philo %d %s at %u\n", philo->id, message, time);
+	if (philo->data->dead == 0)
+		printf("Philo %d %s at %u\n", philo->id, message, time);
 	pthread_mutex_unlock(&philo->data->write);
 }

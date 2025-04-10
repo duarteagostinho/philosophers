@@ -14,13 +14,14 @@
 
 int	main(int ac, char **av)
 {
+	t_philo	*philo;
 	t_data	data;
 	bool	check;
 
 	if (ac == 6 || ac == 5)
 	{
 		init_all(ac, av, &data);
-		printf("everything was init correctly!\n");
+		routine(philo);
 	}
 	else
 		printf("Invalid number of arguments\n");

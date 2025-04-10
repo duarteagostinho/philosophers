@@ -59,9 +59,15 @@ int			ft_strlen(char *str);
 bool		ft_isdigit(char *str);
 bool		checker(int ac, char **av);
 size_t		get_time(void);
-void	print_message(char *message, t_philo *philo);
+void		print_message(char *message, t_philo *philo);
+void		ft_usleep(size_t ms);
+
+/* ACTIONS */
+void	pick_forks(t_philo *philo);
+void	eat(t_philo *philo);
+void	drop_forks(t_philo *philo);
 
 /*INIT*/
 bool		init_all(int ac, char **av, t_data *data);
-
+void	*routine(void *pt);
 #endif
