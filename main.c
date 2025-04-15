@@ -20,7 +20,6 @@ int	main(int ac, char **av)
 		return (1);
 	if (checker(ac, av))
 		return (1);
-	printf("checker\n");
 	if (init_all(ac, av, &data))
 		return (1);
 	printf("init all\n");

@@ -12,22 +12,15 @@
 
 #include "philo.h"
 
-int	check_args(char **av, bool optional)
+int	check_args(char **av)
 {
 	int	i;
 	int	j;
 
-	i = 0;
+	i = 1;
 	j = -1;
-	write(1, "passei 0", 9);
 	if (!av)
 		return (1);
-	write(1, "passei 1", 9);
-	if (optional == true)
-		while (av[5][++j])
-			if (!ft_isaldigit(av[5][j]))
-				return (1);
-	write(1, "passei 2", 9);
 	while (av[i])
 	{
 		j = 0;
@@ -44,10 +37,8 @@ int	check_args(char **av, bool optional)
 
 int	checker(int ac, char **av)
 {
-	if (ac == 4)
-		return (check_args(av, false));
-	else if (ac == 5)
-		return (check_args(av, true));
+	if (ac == 4 || ac == 5)
+		return (check_args(av));
 	else
 	{
 		printf("Invalid number of arguments\n");
