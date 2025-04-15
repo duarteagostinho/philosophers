@@ -9,19 +9,19 @@ INCLUDES = header.h
 all: $(NAME)
 
 $(NAME): $(OBJS)
-	@echo "FILES COMPILED"
-	@cc $(FLAGS) $(OBJS) -o $(NAME)
+	echo "FILES COMPILED"
+	cc $(FLAGS) $(OBJS) -o $(NAME)
 
 %.o: %.c $(INCLUDES)
-	@cc $(FLAGS) -c $< -o $@
+	cc $(FLAGS) -c $< -o $@
 
 clean:
-	@rm -rf $(OBJS)
-	@echo "REMOVING OBJECT FILES"
+	rm -rf $(OBJS)
+	echo "REMOVING OBJECT FILES"
 
 fclean: clean
-	@rm -rf $(NAME)
-	@echo "REMOVING EXECUTABLE"
+	rm -rf $(NAME)
+	echo "REMOVING EXECUTABLE"
 
 re: fclean all
 

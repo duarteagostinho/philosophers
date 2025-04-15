@@ -6,7 +6,7 @@
 /*   By: duandrad <duandrad@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/25 20:04:41 by duandrad          #+#    #+#             */
-/*   Updated: 2025/04/10 19:33:17 by duandrad         ###   ########.fr       */
+/*   Updated: 2025/04/11 18:09:57 by duandrad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,34 @@ void	*routine(void *pt)
 		eat(philo);
 		print_message("is thinking", philo);
 	}
-	if (pthread_join(&philo->thread, NULL))
+	if (pthread_join(philo->thread, NULL))
 		return ((void*)1);
 	return (NULL);
+}
+
+int	thread_init(t_data *data)
+{
+	int			i;
+	pthread_t	t0;
+
+	i = -1;
+	data->start_time = get_time();
+	if (data->meals_nb > 0)
+	{
+		if (pthread_create(&t0, NULL, &monitor, &data->philos[0]))
+			return (1);
+	}
+	while (++i < data->philo_num)
+	{
+		if (pthread_create(&data->tid[i], NULL, &routine, &data->philos[i]))
+			return (1);
+		ft_usleep(1);
+	}
+	i = -1;
+	while (++i < data->philo_num)
+	{
+		if (pthread_join(data->tid[i], NULL))
+			return (1);
+	}
+	return (0);
 }

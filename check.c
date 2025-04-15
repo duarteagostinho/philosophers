@@ -12,34 +12,37 @@
 
 #include "philo.h"
 
-bool	check_args(char **av, bool optional)
+int	check_args(char **av, bool optional)
 {
-	int	nr_of_philos;
+	int	i;
+	int	j;
 
+	i = 0;
+	j = -1;
+	write(1, "passei 0", 9);
+	if (!av)
+		return (1);
+	write(1, "passei 1", 9);
 	if (optional == true)
+		while (av[5][++j])
+			if (!ft_isaldigit(av[5][j]))
+				return (1);
+	write(1, "passei 2", 9);
+	while (av[i])
 	{
-		if (!ft_isdigit(av[5]))
+		j = 0;
+		while (av[i][j])
 		{
-			printf("Invalid parameter\n");
-			return (false);
+			if (!ft_isdigit(av[i][j]))
+				return (1);
+			j++;
 		}
+		i++;
 	}
-	if (!ft_isdigit(av[1]) || !ft_isdigit(av[2]) || !ft_isdigit(av[3])
-		|| !ft_isdigit(av[4]))
-	{
-		printf("Invalid parameters\n");
-		return (false);
-	}
-	nr_of_philos = ft_atoi(av[1]);
-	if (!(nr_of_philos >= 1 && nr_of_philos <= 200))
-	{
-		printf("Invaldid number of philos\n");
-		return (false);
-	}
-	return (true);
+	return (0);
 }
 
-bool	checker(int ac, char **av)
+int	checker(int ac, char **av)
 {
 	if (ac == 4)
 		return (check_args(av, false));
@@ -48,6 +51,6 @@ bool	checker(int ac, char **av)
 	else
 	{
 		printf("Invalid number of arguments\n");
-		return (false);
+		return (1);
 	}
 }

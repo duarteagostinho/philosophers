@@ -14,15 +14,18 @@
 
 int	main(int ac, char **av)
 {
-	t_philo	*philo;
 	t_data	data;
-	bool	check;
 
-	if (ac == 6 || ac == 5)
-	{
-		init_all(ac, av, &data);
-		routine(philo);
-	}
-	else
-		printf("Invalid number of arguments\n");
+	if (ac < 5 || ac > 6)
+		return (1);
+	if (checker(ac, av))
+		return (1);
+	printf("checker\n");
+	if (init_all(ac, av, &data))
+		return (1);
+	printf("init all\n");
+	if (thread_init(&data))
+		return (1);
+	printf("thread init");
+	return (0);
 }

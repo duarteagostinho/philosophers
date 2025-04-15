@@ -6,13 +6,13 @@
 /*   By: duandrad <duandrad@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/24 17:25:12 by gloryboydud       #+#    #+#             */
-/*   Updated: 2025/04/08 17:51:49 by duandrad         ###   ########.fr       */
+/*   Updated: 2025/04/11 18:11:57 by duandrad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-bool	init_data(int ac, char **av, t_data *data)
+int	init_data(int ac, char **av, t_data *data)
 {
 	data->philo_num = atoi(av[1]);
 	data->death_time = atoi(av[2]);
@@ -28,7 +28,7 @@ bool	init_data(int ac, char **av, t_data *data)
 	return (true);
 }
 
-bool	alloc_structs(t_data *data)
+int	alloc_structs(t_data *data)
 {
 	data->tid = malloc(sizeof(pthread_t) * data->philo_num);
 	if (!data->tid)
@@ -42,7 +42,7 @@ bool	alloc_structs(t_data *data)
 	return (true);
 }
 
-bool	init_philos(t_data *data)
+int	init_philos(t_data *data)
 {
 	int	i;
 
@@ -61,7 +61,7 @@ bool	init_philos(t_data *data)
 	return (true);
 }
 
-bool	init_forks(t_data *data)
+int	init_forks(t_data *data)
 {
 	int	i;
 
@@ -81,7 +81,7 @@ bool	init_forks(t_data *data)
 }
 
 
-bool	init_all(int ac, char **av, t_data *data)
+int	init_all(int ac, char **av, t_data *data)
 {
 	if (!init_data(ac, av, data))
 		return (false);
