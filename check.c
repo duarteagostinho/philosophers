@@ -18,15 +18,17 @@ int	check_args(char **av)
 	int	j;
 
 	i = 1;
-	j = -1;
-	if (!av)
-		return (1);
 	while (av[i])
 	{
 		j = 0;
 		while (av[i][j])
 		{
-			if (!ft_isdigit(av[i][j]))
+			if (av[i][j] == ' ')
+			{
+				j++;
+				continue ;
+			}
+			if ((av[i][j] < 48 || av[i][j] > 57))
 				return (1);
 			j++;
 		}

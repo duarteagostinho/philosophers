@@ -19,6 +19,7 @@
 # include <pthread.h>
 # include <sys/time.h>
 # include <stdbool.h>
+# include <string.h>
 
 struct	s_data;
 
@@ -62,6 +63,9 @@ size_t		get_time(void);
 void		print_message(char *message, t_philo *philo);
 void		ft_usleep(size_t ms);
 void		ft_putstr(char *str);
+void		ft_exit(t_data *data);
+
+
 /* ACTIONS */
 void		pick_forks(t_philo *philo);
 void		eat(t_philo *philo);

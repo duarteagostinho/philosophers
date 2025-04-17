@@ -17,10 +17,20 @@ int	main(int ac, char **av)
 	t_data	data;
 
 	if (checker(ac, av))
+	{
 		return (1);
+		ft_putstr("checker error");
+	}
 	if (init_all(ac, av, &data))
+	{
 		return (1);
+		ft_putstr("init all error");
+	}
 	if (thread_init(&data))
+	{
 		return (1);
+		ft_putstr("thread init error");
+	}
+	ft_exit(&data);
 	return (0);
 }
