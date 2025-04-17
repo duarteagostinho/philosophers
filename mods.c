@@ -6,7 +6,7 @@
 /*   By: duandrad <duandrad@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/25 20:04:41 by duandrad          #+#    #+#             */
-/*   Updated: 2025/04/11 18:09:57 by duandrad         ###   ########.fr       */
+/*   Updated: 2025/04/15 22:48:37 by duandrad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,8 @@ void	*routine(void *pt)
 	philo = (t_philo *)pt;
 	philo->time_to_die = get_time() + philo->data->death_time;
 	pthread_create(&philo->thread, NULL, &supervisor, (void*)philo);
-		return ((void *)1);
+	return ((void *)1);
+	ft_putstr("routine\n");
 	while (philo->data->dead == 0)
 	{
 		eat(philo);

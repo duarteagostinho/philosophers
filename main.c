@@ -22,9 +22,8 @@ int	main(int ac, char **av)
 		return (1);
 	if (init_all(ac, av, &data))
 		return (1);
-	printf("init all\n");
 	if (thread_init(&data))
 		return (1);
-	printf("thread init");
+	
 	return (0);
 }

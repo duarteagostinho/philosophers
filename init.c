@@ -6,7 +6,7 @@
 /*   By: duandrad <duandrad@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/24 17:25:12 by gloryboydud       #+#    #+#             */
-/*   Updated: 2025/04/11 18:11:57 by duandrad         ###   ########.fr       */
+/*   Updated: 2025/04/15 20:16:32 by duandrad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ int	init_data(int ac, char **av, t_data *data)
 	data->eat_time = atoi(av[3]);
 	data->sleep_time = atoi(av[4]);
 	if (ac == 6)
-		data->meals_nb = atoi(av[5]);
+	data->meals_nb = atoi(av[5]);
 	data->meals_nb = -1;
 	data->dead = 0;
 	data->finished = 0;
@@ -42,6 +42,25 @@ int	alloc_structs(t_data *data)
 	return (true);
 }
 
+int	init_forks(t_data *data)
+{
+	int	i;
+
+	i = -1;
+	while (++i < data->philo_num)
+		pthread_mutex_init(&data->forks[i], NULL);
+	data->philos[0].l_fork = &data->forks[0];
+	data->philos[0].r_fork = &data->forks[data->philo_num - 1];
+	i = 1;
+	while (i < data->philo_num)
+	{
+		data->philos[i].l_fork = &data->forks[i];
+		data->philos[i].r_fork = &data->forks[i - 1];
+		i++;
+	}
+	return (true);
+}
+
 int	init_philos(t_data *data)
 {
 	int	i;
@@ -61,34 +80,16 @@ int	init_philos(t_data *data)
 	return (true);
 }
 
-int	init_forks(t_data *data)
-{
-	int	i;
-
-	i = 0;
-	while (i < data->philo_num)
-		pthread_mutex_init(&data->forks[i], NULL);
-	data->philos[0].l_fork = &data->forks[0];
-	data->philos[0].r_fork = &data->forks[data->philo_num - 1];
-	i = 1;
-	while (i < data->philo_num)
-	{
-		data->philos[i].l_fork = &data->forks[i];
-		data->philos[i].r_fork = &data->forks[i - 1];
-		i++;
-	}
-	return (true);
-}
 
 
 int	init_all(int ac, char **av, t_data *data)
 {
 	if (!init_data(ac, av, data))
-		return (false);
+		return (1);
 	if (!alloc_structs(data))
-		return (false);
+		return (1);
 	if (!init_forks(data))
-		return (false);
+		return (1);
 	init_philos(data);
-	return (true);
+	return (0);
 }
