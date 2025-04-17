@@ -39,7 +39,7 @@ typedef struct s_philo
 typedef struct s_data
 {
 	int					philo_num;
-	unsigned int 		death_time;
+	unsigned int		death_time;
 	unsigned int		eat_time;
 	unsigned int		sleep_time;
 	int					meals_nb;

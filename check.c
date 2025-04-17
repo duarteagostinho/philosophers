@@ -37,7 +37,7 @@ int	check_args(char **av)
 
 int	checker(int ac, char **av)
 {
-	if (ac == 4 || ac == 5)
+	if (ac == 5 || ac == 6)
 		return (check_args(av));
 	else
 	{

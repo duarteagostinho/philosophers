@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: duandrad <duandrad@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: duandrad <duandrad@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/24 17:25:12 by gloryboydud       #+#    #+#             */
-/*   Updated: 2025/04/15 20:16:32 by duandrad         ###   ########.fr       */
+/*   Updated: 2025/04/17 15:14:16 by duandrad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,9 +18,9 @@ int	init_data(int ac, char **av, t_data *data)
 	data->death_time = atoi(av[2]);
 	data->eat_time = atoi(av[3]);
 	data->sleep_time = atoi(av[4]);
-	if (ac == 6)
-	data->meals_nb = atoi(av[5]);
 	data->meals_nb = -1;
+	if (ac == 6)
+		data->meals_nb = atoi(av[5]);
 	data->dead = 0;
 	data->finished = 0;
 	pthread_mutex_init(&data->write, NULL);
@@ -80,16 +80,27 @@ int	init_philos(t_data *data)
 	return (true);
 }
 
-
-
 int	init_all(int ac, char **av, t_data *data)
 {
 	if (!init_data(ac, av, data))
+	{
+		ft_putstr("Error: Init data\n");
 		return (1);
+	}
 	if (!alloc_structs(data))
+	{
+		ft_putstr("Error: Allocating structs\n");
 		return (1);
+	}
 	if (!init_forks(data))
+	{
+		ft_putstr("Error: Init forks\n");
 		return (1);
-	init_philos(data);
+	}
+	if (!init_philos(data))
+	{
+		ft_putstr("Error: Init philos\n");
+		return (1);
+	}
 	return (0);
 }

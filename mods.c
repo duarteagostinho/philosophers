@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   mods.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: duandrad <duandrad@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: duandrad <duandrad@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/25 20:04:41 by duandrad          #+#    #+#             */
-/*   Updated: 2025/04/15 22:48:37 by duandrad         ###   ########.fr       */
+/*   Updated: 2025/04/17 14:20:27 by duandrad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ void	*monitor(void *pt)
 	while (!philo->data->dead)
 	{
 		pthread_mutex_lock(&philo->lock);
-		if (philo->data->finished >=  philo->data->philo_num)
+		if (philo->data->finished >= philo->data->philo_num)
 			philo->data->dead = 1;
 		pthread_mutex_unlock(&philo->lock);
 	}
@@ -59,17 +59,22 @@ void	*routine(void *pt)
 
 	philo = (t_philo *)pt;
 	philo->time_to_die = get_time() + philo->data->death_time;
-	pthread_create(&philo->thread, NULL, &supervisor, (void*)philo);
-	return ((void *)1);
-	ft_putstr("routine\n");
+	if ((pthread_create(&philo->thread, NULL, &supervisor, (void *)philo)) != 0)
+	{
+		ft_putstr("Failed to create supervisor thread\n");
+		return ((void *)1);
+	}
 	while (philo->data->dead == 0)
 	{
 		eat(philo);
 		print_message("is thinking", philo);
 	}
-	if (pthread_join(philo->thread, NULL))
-		return ((void*)1);
-	return (NULL);
+	if (pthread_join(philo->thread, NULL) != 0)
+	{
+		ft_putstr("Failed to join supervisor thread\n");
+		return ((void *)1);
+	}
+		return (NULL);
 }
 
 int	thread_init(t_data *data)
@@ -87,8 +92,10 @@ int	thread_init(t_data *data)
 	while (++i < data->philo_num)
 	{
 		if (pthread_create(&data->tid[i], NULL, &routine, &data->philos[i]))
+		{
+			ft_putstr("Failed to create philosopher thread\n");
 			return (1);
-		ft_usleep(1);
+		}
 	}
 	i = -1;
 	while (++i < data->philo_num)
