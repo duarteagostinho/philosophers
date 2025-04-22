@@ -29,7 +29,8 @@ typedef struct s_philo
 	int					eat_cont;
 	int					status;
 	int					eating;
-	unsigned int		time_to_die;
+	size_t				last_meal;
+	size_t				time_to_die;
 	struct s_data		*data;
 	pthread_t			thread;
 	pthread_mutex_t		lock;
@@ -61,7 +62,7 @@ int			ft_isdigit(char c);
 int			checker(int ac, char **av);
 size_t		get_time(void);
 void		print_message(char *message, t_philo *philo);
-void		ft_usleep(size_t ms);
+int			ft_usleep(useconds_t ms);
 void		ft_putstr(char *str);
 void		ft_exit(t_data *data);
 
