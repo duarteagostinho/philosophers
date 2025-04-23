@@ -6,7 +6,7 @@
 /*   By: duandrad <duandrad@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/24 17:25:12 by gloryboydud       #+#    #+#             */
-/*   Updated: 2025/04/22 16:07:37 by duandrad         ###   ########.fr       */
+/*   Updated: 2025/04/23 16:02:27 by duandrad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,7 @@ int	init_data(int ac, char **av, t_data *data)
 		|| data->eat_time < 0 || data->sleep_time < 0)
 			return 1;
 	data->dead = 0;
+	data->start_time = get_time();
 	data->finished = 0;
 	pthread_mutex_init(&data->write, NULL);
 	pthread_mutex_init(&data->lock, NULL);

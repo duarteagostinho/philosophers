@@ -6,7 +6,7 @@
 /*   By: duandrad <duandrad@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/08 14:42:45 by duandrad          #+#    #+#             */
-/*   Updated: 2025/04/22 15:51:08 by duandrad         ###   ########.fr       */
+/*   Updated: 2025/04/23 16:04:23 by duandrad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ int ft_usleep(useconds_t ms)
 {
 	u_int64_t start = get_time();
 	while ((get_time() - start) < ms)
-		usleep(ms / 10);
+		usleep(100);
 	return (0);
 }
 
@@ -37,11 +37,13 @@ void print_message(char *message, t_philo *philo)
 	time = get_time() - philo->data->start_time;
 	if (strcmp(message, "has died") == 0 && philo->data->dead == 0)
 	{
-		printf("%u %d %s\n", time, philo->id, message);
+		printf("DEBUG: Philosopher %d last meal: %zu, current time: %zu\n",
+			philo->id, philo->last_meal - philo->data->start_time, time);
+		printf("%zu %d %s\n", time, philo->id, message);
 		philo->data->dead = 1;
 	}
 	if (!philo->data->dead)
-		printf("%u %d %s\n", time, philo->id, message);
+		printf("%zu %d %s\n", time, philo->id, message);
 	pthread_mutex_unlock(&philo->data->write);
 }
 

@@ -12,6 +12,14 @@
 
 #include "philo.h"
 
+void	one_philo(t_data *data)
+{
+	printf("%zu 1 has taken a fork\n", get_time());
+	ft_usleep(data->death_time);
+	printf("%zu 1 has died\n", get_time());
+	ft_exit(data);
+}
+
 int	main(int ac, char **av)
 {
 	t_data	data;
@@ -25,6 +33,11 @@ int	main(int ac, char **av)
 	{
 		return (1);
 		ft_putstr("init all error");
+	}
+	if (data.philo_num == 1)
+	{
+		one_philo(&data);
+		return (0);
 	}
 	if (thread_init(&data))
 	{

@@ -45,12 +45,12 @@ typedef struct s_data
 	unsigned int		eat_time;
 	unsigned int		sleep_time;
 	int					meals_nb;
-	bool				dead;
-	bool				finished;
+	int				dead;
+	int				finished;
 	t_philo				*philos;
 	pthread_mutex_t		*forks;
 	pthread_t			*tid;
-	unsigned int		start_time;
+	size_t				start_time;
 	pthread_mutex_t		lock;
 	pthread_mutex_t		write;
 }	t_data;
