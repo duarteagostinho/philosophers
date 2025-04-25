@@ -6,7 +6,7 @@
 /*   By: duandrad <duandrad@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/25 20:04:41 by duandrad          #+#    #+#             */
-/*   Updated: 2025/04/23 16:02:10 by duandrad         ###   ########.fr       */
+/*   Updated: 2025/04/25 13:15:42 by duandrad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,17 +43,13 @@ void	*supervisor(void *pt)
 	return ((void *) 0);
 }
 
-
 void	*routine(void *pt)
 {
 	t_philo	*philo;
 
 	philo = (t_philo *)pt;
 	if (pthread_create(&philo->thread, NULL, &supervisor, (void *)philo))
-	{
-		ft_putstr("Failed to create supervisor thread\n");
 		return ((void *)1);
-	}
 	while (philo->data->dead == 0)
 	{
 		eat(philo);
@@ -67,10 +63,7 @@ void	*routine(void *pt)
 		print_message("is thinking", philo);
 	}
 	if (pthread_join(philo->thread, NULL))
-	{
-		ft_putstr("Failed to join supervisor thread\n");
 		return ((void *)1);
-	}
 	return ((void *) 0);
 }
 

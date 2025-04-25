@@ -24,7 +24,7 @@ int	init_data(int ac, char **av, t_data *data)
 		data->meals_nb = -1;
 	if (data->philo_num <= 0 || data->philo_num > 200 || data->death_time < 0
 		|| data->eat_time < 0 || data->sleep_time < 0)
-			return 1;
+		return (1);
 	data->dead = 0;
 	data->start_time = get_time();
 	data->finished = 0;

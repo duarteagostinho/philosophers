@@ -45,8 +45,8 @@ typedef struct s_data
 	unsigned int		eat_time;
 	unsigned int		sleep_time;
 	int					meals_nb;
-	int				dead;
-	int				finished;
+	int					dead;
+	int					finished;
 	t_philo				*philos;
 	pthread_mutex_t		*forks;
 	pthread_t			*tid;
@@ -65,7 +65,6 @@ void		print_message(char *message, t_philo *philo);
 int			ft_usleep(useconds_t ms);
 void		ft_putstr(char *str);
 void		ft_exit(t_data *data);
-
 
 /* ACTIONS */
 void		pick_forks(t_philo *philo);

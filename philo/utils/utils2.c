@@ -6,15 +6,17 @@
 /*   By: duandrad <duandrad@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/08 14:42:45 by duandrad          #+#    #+#             */
-/*   Updated: 2025/04/23 16:04:23 by duandrad         ###   ########.fr       */
+/*   Updated: 2025/04/23 17:02:54 by duandrad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../philo.h"
 
-int ft_usleep(useconds_t ms)
+int	ft_usleep(useconds_t ms)
 {
-	u_int64_t start = get_time();
+	u_int64_t	start;
+
+	start = get_time();
 	while ((get_time() - start) < ms)
 		usleep(100);
 	return (0);
@@ -29,9 +31,9 @@ size_t	get_time(void)
 	return ((tv.tv_sec * 1000) + (tv.tv_usec / 1000));
 }
 
-void print_message(char *message, t_philo *philo)
+void	print_message(char *message, t_philo *philo)
 {
-	size_t time;
+	size_t	time;
 
 	pthread_mutex_lock(&philo->data->write);
 	time = get_time() - philo->data->start_time;
