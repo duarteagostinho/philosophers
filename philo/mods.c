@@ -6,7 +6,7 @@
 /*   By: duandrad <duandrad@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/25 20:04:41 by duandrad          #+#    #+#             */
-/*   Updated: 2025/04/25 13:15:42 by duandrad         ###   ########.fr       */
+/*   Updated: 2025/05/05 19:30:09 by duandrad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,12 +17,22 @@ void	*monitor(void *pt)
 	t_philo	*philo;
 
 	philo = (t_philo *)pt;
-	while (philo->data->dead == 0)
+	while (1)
 	{
-		pthread_mutex_lock(&philo->lock);
+		pthread_mutex_lock(&philo->data->lock);
+		if (philo->data->dead)
+		{
+			pthread_mutex_unlock(&philo->data->lock);
+			break ;
+		}
 		if (philo->data->finished >= philo->data->philo_num)
+		{
 			philo->data->dead = 1;
-		pthread_mutex_unlock(&philo->lock);
+			pthread_mutex_unlock(&philo->data->lock);
+			break ;
+		}
+		pthread_mutex_unlock(&philo->data->lock );
+		usleep(100);
 	}
 	return ((void *) 0);
 }
@@ -32,13 +42,25 @@ void	*supervisor(void *pt)
 	t_philo	*philo;
 
 	philo = (t_philo *)pt;
-	while (philo->data->dead == 0)
+	while (1)
 	{
 		pthread_mutex_lock(&philo->lock);
+		if (philo->data->dead || philo->data->finished >= philo->data->philo_num)
+		{
+			pthread_mutex_unlock(&philo->lock);
+			break;
+		}
 		if ((get_time() - philo->last_meal) > philo->time_to_die)
+		{
+			pthread_mutex_lock(&philo->data->lock);
 			print_message("has died", philo);
+			philo->data->dead = 1;
+			pthread_mutex_unlock(&philo->data->lock);
+			pthread_mutex_unlock(&philo->lock);
+			break;
+		}
 		pthread_mutex_unlock(&philo->lock);
-		ft_usleep(100);
+		ft_usleep(1000);
 	}
 	return ((void *) 0);
 }
@@ -50,17 +72,26 @@ void	*routine(void *pt)
 	philo = (t_philo *)pt;
 	if (pthread_create(&philo->thread, NULL, &supervisor, (void *)philo))
 		return ((void *)1);
-	while (philo->data->dead == 0)
+	while (1)
 	{
-		eat(philo);
-		if (philo->eat_cont == philo->data->meals_nb)
+		pthread_mutex_lock(&philo->data->lock);
+		if (philo->data->dead || philo->data->finished >= philo->data->philo_num)
 		{
-			pthread_mutex_lock(&philo->data->lock);
-			philo->data->finished++;
-			philo->eat_cont++;
 			pthread_mutex_unlock(&philo->data->lock);
+			break ;
 		}
+		pthread_mutex_unlock(&philo->data->lock);
+		eat(philo);
+		pthread_mutex_lock(&philo->data->lock);
+		if (philo->data->finished == philo->data->philo_num)
+		{
+			philo->data->dead = 1;
+			pthread_mutex_unlock(&philo->data->lock);
+			break;
+		}
+		pthread_mutex_unlock(&philo->data->lock);
 		print_message("is thinking", philo);
+		usleep(100);
 	}
 	if (pthread_join(philo->thread, NULL))
 		return ((void *)1);

@@ -6,7 +6,7 @@
 /*   By: duandrad <duandrad@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/08 14:42:45 by duandrad          #+#    #+#             */
-/*   Updated: 2025/04/23 17:02:54 by duandrad         ###   ########.fr       */
+/*   Updated: 2025/05/05 16:53:15 by duandrad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,16 +36,16 @@ void	print_message(char *message, t_philo *philo)
 	size_t	time;
 
 	pthread_mutex_lock(&philo->data->write);
-	time = get_time() - philo->data->start_time;
-	if (strcmp(message, "has died") == 0 && philo->data->dead == 0)
+	pthread_mutex_lock(&philo->data->lock);
+	if (philo->data->dead)
 	{
-		printf("DEBUG: Philosopher %d last meal: %zu, current time: %zu\n",
-			philo->id, philo->last_meal - philo->data->start_time, time);
-		printf("%zu %d %s\n", time, philo->id, message);
-		philo->data->dead = 1;
+		pthread_mutex_unlock(&philo->data->lock);
+		pthread_mutex_unlock(&philo->data->write);
+		return ;
 	}
-	if (!philo->data->dead)
-		printf("%zu %d %s\n", time, philo->id, message);
+	pthread_mutex_unlock(&philo->data->lock);
+	time = get_time() - philo->data->start_time;
+	printf("%zu %d %s\n", time, philo->id, message);
 	pthread_mutex_unlock(&philo->data->write);
 }
 
