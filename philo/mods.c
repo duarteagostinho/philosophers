@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   mods.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: duandrad <duandrad@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: duandrad <duandrad@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/25 20:04:41 by duandrad          #+#    #+#             */
-/*   Updated: 2025/05/08 13:10:04 by duandrad         ###   ########.fr       */
+/*   Updated: 2025/05/15 14:54:06 by duandrad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ void	*monitor(void *pt)
 			break ;
 		}
 		pthread_mutex_unlock(&philo->data->lock);
-		usleep(1000);
+		ft_usleep(10);
 	}
 	return (NULL);
 }
@@ -42,7 +42,7 @@ void	*supervisor(void *philo_pointer)
 	t_philo	*philo;
 
 	philo = (t_philo *) philo_pointer;
-	while (philo->data->dead == 0 && philo->data->finished <= philo->data->philo_num)
+	while (philo->data->dead == 0 && philo->data->finished < philo->data->philo_num)
 	{
 		pthread_mutex_lock(&philo->lock);
 		if ((get_time() - philo->last_meal) >= philo->time_to_die)
@@ -53,7 +53,7 @@ void	*supervisor(void *philo_pointer)
 			philo->data->dead = 1;
 		}
 		pthread_mutex_unlock(&philo->lock);
-		usleep(100);
+		ft_usleep(100);
 	}
 	return ((void *)0);
 }
@@ -67,8 +67,13 @@ void	*routine(void *pt)
 		return ((void *)1);
 	while (philo->data->dead == 0)
 	{
+		pick_forks(philo);
 		eat(philo);
-		usleep(100);
+		drop_forks(philo);
+		print_message("is sleeping", philo);
+		ft_usleep(philo->data->eat_time);
+		print_message("is thinking", philo);
+		ft_usleep(philo->data->sleep_time);
 	}
 	if (pthread_join(philo->thread, NULL))
 		return ((void *)1);

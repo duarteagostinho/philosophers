@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   actions.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: duandrad <duandrad@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: duandrad <duandrad@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/24 19:30:39 by duandrad          #+#    #+#             */
-/*   Updated: 2025/05/08 13:18:24 by duandrad         ###   ########.fr       */
+/*   Updated: 2025/05/15 14:53:11 by duandrad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,8 @@
 
 void	pick_forks(t_philo *philo)
 {
+	if (philo->eat_cont >= philo->data->meals_nb)
+		return ;
 	if (philo->id % 2 == 0)
 	{
 		pthread_mutex_lock(philo->l_fork);
@@ -32,13 +34,17 @@ void	pick_forks(t_philo *philo)
 
 void	eat(t_philo *philo)
 {
-	if (philo->data->dead || philo->data->finished >= philo->data->philo_num)
+	if (philo->data->meals_nb != -1)
+	{
+		if (philo->eat_cont >= philo->data->meals_nb)
+			return ;
+	}
+	if (philo->data->dead)
 		return ;
-	pick_forks(philo);
 	pthread_mutex_lock(&philo->lock);
-	print_message("is eating", philo);
 	philo->last_meal = get_time();
 	philo->eat_cont++;
+	print_message("is eating", philo);
 	if (philo->eat_cont == philo->data->meals_nb)
 	{
 		pthread_mutex_lock(&philo->data->lock);
@@ -46,11 +52,6 @@ void	eat(t_philo *philo)
 		pthread_mutex_unlock(&philo->data->lock);
 	}
 	pthread_mutex_unlock(&philo->lock);
-	ft_usleep(philo->data->eat_time);
-	drop_forks(philo);
-	print_message("is sleeping", philo);
-	ft_usleep(philo->data->sleep_time);
-	print_message("is thinking", philo);
 	return ;
 }
 
