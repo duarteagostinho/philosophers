@@ -46,6 +46,7 @@ typedef struct s_data
 	unsigned int		sleep_time;
 	int					meals_nb;
 	int					dead;
+	int					all_finished;
 	int					finished;
 	t_philo				*philos;
 	pthread_mutex_t		*forks;
@@ -62,7 +63,7 @@ int			ft_isdigit(char c);
 int			checker(int ac, char **av);
 size_t		get_time(void);
 void		print_message(char *message, t_philo *philo);
-int			ft_usleep(useconds_t ms);
+void		ft_usleep(useconds_t ms);
 void		ft_putstr(char *str);
 void		ft_exit(t_data *data);
 

@@ -14,9 +14,9 @@
 
 void	one_philo(t_data *data)
 {
-	printf("%zu 1 has taken a fork\n", get_time());
+	printf("0 1 has taken a fork\n");
 	ft_usleep(data->death_time);
-	printf("%zu 1 has died\n", get_time());
+	printf("%u 1 has died\n", data->death_time);
 	ft_exit(data);
 }
 
