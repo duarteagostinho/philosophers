@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   mods.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: duandrad <duandrad@student.42.fr>          +#+  +:+       +#+        */
+/*   By: duandrad <duandrad@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/25 20:04:41 by duandrad          #+#    #+#             */
-/*   Updated: 2025/05/15 14:54:06 by duandrad         ###   ########.fr       */
+/*   Updated: 2025/05/15 17:36:42 by duandrad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,6 @@ void	*routine(void *pt)
 	{
 		pick_forks(philo);
 		eat(philo);
-		drop_forks(philo);
 		print_message("is sleeping", philo);
 		ft_usleep(philo->data->eat_time);
 		print_message("is thinking", philo);

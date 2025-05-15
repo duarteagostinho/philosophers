@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   actions.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: duandrad <duandrad@student.42.fr>          +#+  +:+       +#+        */
+/*   By: duandrad <duandrad@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/24 19:30:39 by duandrad          #+#    #+#             */
-/*   Updated: 2025/05/15 14:53:11 by duandrad         ###   ########.fr       */
+/*   Updated: 2025/05/15 17:36:56 by duandrad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,7 @@ void	eat(t_philo *philo)
 		philo->data->finished++;
 		pthread_mutex_unlock(&philo->data->lock);
 	}
+	drop_forks(philo);
 	pthread_mutex_unlock(&philo->lock);
 	return ;
 }
