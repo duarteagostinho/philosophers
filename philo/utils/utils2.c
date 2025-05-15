@@ -6,19 +6,19 @@
 /*   By: duandrad <duandrad@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/08 14:42:45 by duandrad          #+#    #+#             */
-/*   Updated: 2025/05/15 12:48:50 by duandrad         ###   ########.fr       */
+/*   Updated: 2025/05/15 19:30:32 by duandrad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../philo.h"
 
-void	ft_usleep(useconds_t ms)
+void	ft_usleep(size_t ms)
 {
-	u_int64_t	start;
+	size_t	start;
 
 	start = get_time();
 	while ((get_time() - start) < ms)
-		usleep(400);
+		usleep(4);
 }
 
 size_t	get_time(void)

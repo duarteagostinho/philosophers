@@ -63,7 +63,7 @@ int			ft_isdigit(char c);
 int			checker(int ac, char **av);
 size_t		get_time(void);
 void		print_message(char *message, t_philo *philo);
-void		ft_usleep(useconds_t ms);
+void		ft_usleep(size_t ms);
 void		ft_putstr(char *str);
 void		ft_exit(t_data *data);
 

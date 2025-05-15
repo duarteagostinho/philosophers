@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   mods.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: duandrad <duandrad@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: duandrad <duandrad@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/25 20:04:41 by duandrad          #+#    #+#             */
-/*   Updated: 2025/05/15 17:36:42 by duandrad         ###   ########.fr       */
+/*   Updated: 2025/05/15 19:15:01 by duandrad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,20 +40,21 @@ void	*monitor(void *pt)
 void	*supervisor(void *philo_pointer)
 {
 	t_philo	*philo;
+	int i = 0;
+	size_t calc;
 
 	philo = (t_philo *) philo_pointer;
 	while (philo->data->dead == 0 && philo->data->finished < philo->data->philo_num)
 	{
 		pthread_mutex_lock(&philo->lock);
-		if ((get_time() - philo->last_meal) >= philo->time_to_die)
+		calc = (get_time() - philo->last_meal);
+		if (calc >= philo->time_to_die)
 		{
-			printf("DEBUG: Philosopher %d last meal: %zu, current time: %zu\n",
-				philo->id, philo->last_meal - philo->data->start_time, get_time() - philo->data->start_time);
 			print_message("has died", philo);
 			philo->data->dead = 1;
+			pthread_mutex_unlock(&philo->lock);
 		}
 		pthread_mutex_unlock(&philo->lock);
-		ft_usleep(100);
 	}
 	return ((void *)0);
 }
@@ -67,12 +68,13 @@ void	*routine(void *pt)
 		return ((void *)1);
 	while (philo->data->dead == 0)
 	{
-		pick_forks(philo);
 		eat(philo);
-		print_message("is sleeping", philo);
-		ft_usleep(philo->data->eat_time);
-		print_message("is thinking", philo);
-		ft_usleep(philo->data->sleep_time);
+		if (philo->data->finished < philo->data->philo_num)
+		{
+			print_message("is sleeping", philo);
+			ft_usleep(philo->data->sleep_time);
+			print_message("is thinking", philo);
+		}
 	}
 	if (pthread_join(philo->thread, NULL))
 		return ((void *)1);
