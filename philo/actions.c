@@ -6,7 +6,7 @@
 /*   By: duandrad <duandrad@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/24 19:30:39 by duandrad          #+#    #+#             */
-/*   Updated: 2025/05/16 13:39:40 by duandrad         ###   ########.fr       */
+/*   Updated: 2025/05/16 13:51:32 by duandrad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,13 +14,7 @@
 
 void	pick_forks(t_philo *philo)
 {
-	if (philo->data->meals_nb != -1)
-	{
-		if (philo->eat_cont >= philo->data->meals_nb)
-			return ;
-	}
-	if (philo->data->dead)
-		return ;
+
 	if (philo->id % 2 == 0)
 	{
 		pthread_mutex_lock(philo->r_fork);

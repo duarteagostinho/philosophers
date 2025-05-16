@@ -6,7 +6,7 @@
 /*   By: duandrad <duandrad@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/08 14:42:45 by duandrad          #+#    #+#             */
-/*   Updated: 2025/05/16 13:22:45 by duandrad         ###   ########.fr       */
+/*   Updated: 2025/05/16 13:44:05 by duandrad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,15 +34,11 @@ void	print_message(char *message, t_philo *philo)
 {
 	size_t	time;
 
+	if (philo->data->dead)
+		return ;
 	pthread_mutex_lock(&philo->data->write);
 	time = get_time() - philo->data->start_time;
 	pthread_mutex_lock(&philo->data->lock);
-	if (philo->data->dead)
-	{
-		pthread_mutex_unlock(&philo->data->lock);
-		pthread_mutex_unlock(&philo->data->write);
-		return ;
-	}
 	printf("%zu %d %s\n", time, philo->id, message);
 	pthread_mutex_unlock(&philo->data->lock);
 	pthread_mutex_unlock(&philo->data->write);
