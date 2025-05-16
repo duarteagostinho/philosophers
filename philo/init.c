@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: duandrad <duandrad@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: duandrad <duandrad@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/24 17:25:12 by gloryboydud       #+#    #+#             */
-/*   Updated: 2025/05/08 12:17:44 by duandrad         ###   ########.fr       */
+/*   Updated: 2025/05/16 13:38:51 by duandrad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,8 +56,8 @@ int	init_forks(t_data *data)
 	while (++i < data->philo_num)
 		pthread_mutex_init(&data->forks[i], NULL);
 	i = 0;
-	data->philos[0].l_fork = &data->forks[0];
-	data->philos[0].r_fork = &data->forks[data->philo_num - 1];
+	data->philos[0].r_fork = &data->forks[0];
+	data->philos[0].l_fork = &data->forks[data->philo_num - 1];
 	i = 1;
 	while (i < data->philo_num)
 	{

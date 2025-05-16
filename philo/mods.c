@@ -6,7 +6,7 @@
 /*   By: duandrad <duandrad@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/25 20:04:41 by duandrad          #+#    #+#             */
-/*   Updated: 2025/05/15 19:15:01 by duandrad         ###   ########.fr       */
+/*   Updated: 2025/05/16 13:41:18 by duandrad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,6 @@ void	*monitor(void *pt)
 			break ;
 		}
 		pthread_mutex_unlock(&philo->data->lock);
-		ft_usleep(10);
 	}
 	return (NULL);
 }
@@ -55,6 +54,7 @@ void	*supervisor(void *philo_pointer)
 			pthread_mutex_unlock(&philo->lock);
 		}
 		pthread_mutex_unlock(&philo->lock);
+		ft_usleep(10);
 	}
 	return ((void *)0);
 }
@@ -64,8 +64,7 @@ void	*routine(void *pt)
 	t_philo	*philo;
 
 	philo = (t_philo *)pt;
-	if (pthread_create(&philo->thread, NULL, &supervisor, (void *)philo))
-		return ((void *)1);
+
 	while (philo->data->dead == 0)
 	{
 		eat(philo);
@@ -87,11 +86,6 @@ int	thread_init(t_data *data)
 	pthread_t	t0;
 
 	i = -1;
-	if (data->meals_nb > 0)
-	{
-		if (pthread_create(&t0, NULL, &monitor, &data->philos[0]))
-			return (1);
-	}
 	while (++i < data->philo_num)
 	{
 		if (pthread_create(&data->tid[i], NULL, &routine, &data->philos[i]))
@@ -99,8 +93,14 @@ int	thread_init(t_data *data)
 			ft_putstr("Failed to create philosopher thread\n");
 			return (1);
 		}
-		ft_usleep(100);
 	}
+	if (data->meals_nb > 0)
+	{
+		if (pthread_create(&t0, NULL, &monitor, &data->philos[0]))
+			return (1);
+	}
+	if (pthread_create(&data->philos->thread, NULL, &supervisor, data->philos))
+		return (1);
 	i = -1;
 	while (++i < data->philo_num)
 	{
