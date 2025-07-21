@@ -6,11 +6,11 @@
 /*   By: duandrad <duandrad@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/24 17:25:12 by gloryboydud       #+#    #+#             */
-/*   Updated: 2025/05/08 12:17:44 by duandrad         ###   ########.fr       */
+/*   Updated: 2025/07/21 20:11:01 by duandrad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "philo.h"
+#include "../philo.h"
 
 int	init_data(int ac, char **av, t_data *data)
 {

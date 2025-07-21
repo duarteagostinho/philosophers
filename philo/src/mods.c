@@ -6,25 +6,31 @@
 /*   By: duandrad <duandrad@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/25 20:04:41 by duandrad          #+#    #+#             */
-/*   Updated: 2025/07/21 20:05:11 by duandrad         ###   ########.fr       */
+/*   Updated: 2025/07/21 20:18:27 by duandrad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "philo.h"
+#include "../philo.h"
 
 void	help_monitor(t_data	*data)
 {
 	int		i;
-	size_t	calc;
 
+	pthread_mutex_lock(&data->lock);
+	if (data->dead)
+	{
+		pthread_mutex_unlock(&data->lock);
+		return ;
+	}
+	pthread_mutex_unlock(&data->lock);
 	i = -1;
 	while (++i < data->philo_num)
 	{
 		pthread_mutex_lock(&data->philos[i].lock);
-		calc = (get_time() - data->philos[i].last_meal);
-		if (calc >= data->philos[i].time_to_die)
+		if ((get_time() - data->philos[i].last_meal) >=
+			data->philos[i].time_to_die)
 		{
-			print_message("has died", &data->philos[i]);
+			print_message("died", &data->philos[i]);
 			pthread_mutex_lock(&data->lock);
 			data->dead = 1;
 			pthread_mutex_unlock(&data->lock);
@@ -44,7 +50,12 @@ void	*monitor(void *pt)
 	{
 		help_monitor(data);
 		pthread_mutex_lock(&data->lock);
-		if (data->finished >= data->philo_num)
+		if (data->dead)
+		{
+			pthread_mutex_unlock(&data->lock);
+			break ;
+		}
+		if (data->meals_nb != -1 && data->finished >= data->philo_num)
 		{
 			data->dead = 1;
 			pthread_mutex_unlock(&data->lock);
