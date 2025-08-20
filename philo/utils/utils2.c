@@ -3,23 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   utils2.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: duandrad <duandrad@student.42.fr>          +#+  +:+       +#+        */
+/*   By: duandrad <duandrad@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/08 14:42:45 by duandrad          #+#    #+#             */
-/*   Updated: 2025/05/15 19:30:32 by duandrad         ###   ########.fr       */
+/*   Updated: 2025/08/20 11:46:25 by duandrad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../philo.h"
-
-void	ft_usleep(size_t ms)
-{
-	size_t	start;
-
-	start = get_time();
-	while ((get_time() - start) < ms)
-		usleep(4);
-}
 
 size_t	get_time(void)
 {
@@ -28,6 +19,15 @@ size_t	get_time(void)
 	if (gettimeofday(&tv, NULL))
 		return (1);
 	return ((tv.tv_sec * 1000) + (tv.tv_usec / 1000));
+}
+
+void	ft_usleep(size_t ms)
+{
+	size_t	start;
+
+	start = get_time();
+	while ((get_time() - start) < ms)
+		usleep(500);
 }
 
 void	print_message(char *message, t_philo *philo)

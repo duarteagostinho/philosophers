@@ -6,7 +6,7 @@
 /*   By: duandrad <duandrad@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/25 20:04:41 by duandrad          #+#    #+#             */
-/*   Updated: 2025/07/21 20:18:27 by duandrad         ###   ########.fr       */
+/*   Updated: 2025/08/20 12:14:19 by duandrad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,8 +27,8 @@ void	help_monitor(t_data	*data)
 	while (++i < data->philo_num)
 	{
 		pthread_mutex_lock(&data->philos[i].lock);
-		if ((get_time() - data->philos[i].last_meal) >=
-			data->philos[i].time_to_die)
+		if ((get_time() - data->philos[i].last_meal)
+			>= data->philos[i].time_to_die)
 		{
 			print_message("died", &data->philos[i]);
 			pthread_mutex_lock(&data->lock);
@@ -67,35 +67,6 @@ void	*monitor(void *pt)
 	return (NULL);
 }
 
-void	*supervisor(void *philo_pointer)
-{
-	t_philo	*philo;
-	size_t	calc;
-
-	philo = (t_philo *) philo_pointer;
-	while (philo->data->dead == 0
-		&& philo->data->finished < philo->data->philo_num)
-	{
-		pthread_mutex_lock(&philo->lock);
-		calc = (get_time() - philo->last_meal);
-		if (calc >= philo->time_to_die)
-		{
-			pthread_mutex_lock(&philo->data->lock);
-			if (!philo->data->dead)
-			{
-				print_message("has died", philo);
-				philo->data->dead = 1;
-			}
-			pthread_mutex_unlock(&philo->data->lock);
-			pthread_mutex_unlock(&philo->lock);
-			break ;
-		}
-		pthread_mutex_unlock(&philo->lock);
-		ft_usleep(1);
-	}
-	return ((void *)0);
-}
-
 void	*routine(void *pt)
 {
 	t_philo	*philo;
@@ -131,6 +102,7 @@ int	thread_init(t_data *data)
 	pthread_t	t0;
 
 	i = -1;
+	data->start_time = get_time();
 	if (pthread_create(&t0, NULL, &monitor, data))
 		return (1);
 	while (++i < data->philo_num)

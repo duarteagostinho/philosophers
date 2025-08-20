@@ -46,7 +46,6 @@ typedef struct s_data
 	unsigned int		sleep_time;
 	int					meals_nb;
 	int					dead;
-	int					all_finished;
 	int					finished;
 	t_philo				*philos;
 	pthread_mutex_t		*forks;
@@ -70,7 +69,6 @@ void		ft_exit(t_data *data);
 /* ACTIONS */
 void		pick_forks(t_philo *philo);
 void		eat(t_philo *philo);
-void		drop_forks(t_philo *philo);
 
 /*INIT*/
 int			init_all(int ac, char **av, t_data *data);
