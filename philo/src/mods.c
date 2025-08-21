@@ -6,7 +6,7 @@
 /*   By: duandrad <duandrad@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/25 20:04:41 by duandrad          #+#    #+#             */
-/*   Updated: 2025/07/21 20:18:27 by duandrad         ###   ########.fr       */
+/*   Updated: 2025/08/21 14:46:23 by duandrad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,35 +65,6 @@ void	*monitor(void *pt)
 		ft_usleep(1);
 	}
 	return (NULL);
-}
-
-void	*supervisor(void *philo_pointer)
-{
-	t_philo	*philo;
-	size_t	calc;
-
-	philo = (t_philo *) philo_pointer;
-	while (philo->data->dead == 0
-		&& philo->data->finished < philo->data->philo_num)
-	{
-		pthread_mutex_lock(&philo->lock);
-		calc = (get_time() - philo->last_meal);
-		if (calc >= philo->time_to_die)
-		{
-			pthread_mutex_lock(&philo->data->lock);
-			if (!philo->data->dead)
-			{
-				print_message("has died", philo);
-				philo->data->dead = 1;
-			}
-			pthread_mutex_unlock(&philo->data->lock);
-			pthread_mutex_unlock(&philo->lock);
-			break ;
-		}
-		pthread_mutex_unlock(&philo->lock);
-		ft_usleep(1);
-	}
-	return ((void *)0);
 }
 
 void	*routine(void *pt)
