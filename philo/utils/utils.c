@@ -3,24 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: duandrad <duandrad@student.42lisboa.com>   +#+  +:+       +#+        */
+/*   By: duandrad <duandrad@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/03/19 20:01:39 by duandrad          #+#    #+#             */
-/*   Updated: 2025/03/24 16:00:23 by duandrad         ###   ########.fr       */
+/*   Created: 2025/10/13 15:52:00 by duandrad          #+#    #+#             */
+/*   Updated: 2025/10/13 15:52:00 by duandrad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../philo.h"
-
-int	ft_strlen(char *str)
-{
-	int	i;
-
-	i = 0;
-	while (str[i])
-		i++;
-	return (i);
-}
 
 int	ft_atoi(char *str)
 {
@@ -46,11 +36,6 @@ int	ft_atoi(char *str)
 		i++;
 	}
 	return (result * sign);
-}
-
-int	ft_isdigit(char c)
-{
-	return ((c >= '0' && c <= '9'));
 }
 
 void	ft_putstr(char *str)

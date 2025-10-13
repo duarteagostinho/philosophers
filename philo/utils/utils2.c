@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils2.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: duandrad <duandrad@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: duandrad <duandrad@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/04/08 14:42:45 by duandrad          #+#    #+#             */
-/*   Updated: 2025/08/20 11:46:25 by duandrad         ###   ########.fr       */
+/*   Created: 2025/10/13 15:52:08 by duandrad          #+#    #+#             */
+/*   Updated: 2025/10/13 15:52:09 by duandrad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ void	ft_usleep(size_t ms)
 
 	start = get_time();
 	while ((get_time() - start) < ms)
-		usleep(500);
+		usleep(ms);
 }
 
 void	print_message(char *message, t_philo *philo)
@@ -48,14 +48,21 @@ void	print_message(char *message, t_philo *philo)
 	pthread_mutex_unlock(&philo->data->write);
 }
 
-void	ft_free(t_data *data)
+void	ft_free(t_data *data, int flag)
 {
-	if (data->tid)
+	if (flag == 1 && data->tid)
 		free(data->tid);
-	if (data->philos)
+	else if (flag == 2 && data->tid && data->philos)
+	{
+		free(data->tid);
 		free(data->philos);
-	if (data->forks)
+	}
+	else if (flag == 3 && data->tid && data->philos && data->forks)
+	{
+		free(data->tid);
+		free(data->philos);
 		free(data->forks);
+	}
 }
 
 void	ft_exit(t_data *data)
@@ -70,5 +77,5 @@ void	ft_exit(t_data *data)
 	}
 	pthread_mutex_destroy(&data->write);
 	pthread_mutex_destroy(&data->lock);
-	ft_free(data);
+	ft_free(data, 3);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   mods.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: duandrad <duandrad@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: duandrad <duandrad@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/25 20:04:41 by duandrad          #+#    #+#             */
-/*   Updated: 2025/08/21 14:46:23 by duandrad         ###   ########.fr       */
+/*   Updated: 2025/10/13 15:45:47 by duandrad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,17 +80,11 @@ void	*routine(void *pt)
 	while (philo->data->dead == 0)
 	{
 		eat(philo);
-		if (philo->data->dead)
-			break ;
 		if (philo->data->meals_nb != -1 && philo->eat_cont
 			>= philo->data->meals_nb)
 			break ;
-		if (philo->data->dead)
-			break ;
 		print_message("is sleeping", philo);
 		ft_usleep(philo->data->sleep_time);
-		if (philo->data->dead)
-			break ;
 		print_message("is thinking", philo);
 	}
 	return ((void *) 0);

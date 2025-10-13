@@ -3,23 +3,35 @@
 /*                                                        :::      ::::::::   */
 /*   actions.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: duandrad <duandrad@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: duandrad <duandrad@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/24 19:30:39 by duandrad          #+#    #+#             */
-/*   Updated: 2025/07/21 20:11:01 by duandrad         ###   ########.fr       */
+/*   Updated: 2025/10/13 15:51:41 by duandrad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../philo.h"
 
-void	pick_forks(t_philo *philo)
+static int	check_condition(t_philo *philo)
 {
 	if (philo->data->meals_nb != -1)
 	{
 		if (philo->eat_cont >= philo->data->meals_nb)
-			return ;
+			return (1);
 	}
+	pthread_mutex_lock(&philo->data->lock);
 	if (philo->data->dead)
+	{
+		pthread_mutex_unlock(&philo->data->lock);
+		return (1);
+	}
+	pthread_mutex_unlock(&philo->data->lock);
+	return (0);
+}
+
+void	pick_forks(t_philo *philo)
+{
+	if (check_condition(philo))
 		return ;
 	if (philo->id % 2 == 0)
 	{
@@ -37,27 +49,15 @@ void	pick_forks(t_philo *philo)
 	}
 }
 
-static int	check_condition(t_philo *philo)
-{
-	if (philo->data->meals_nb != -1)
-	{
-		if (philo->eat_cont >= philo->data->meals_nb)
-			return (1);
-	}
-	if (philo->data->dead)
-		return (1);
-	return (0);
-}
-
 void	eat(t_philo *philo)
 {
 	if (check_condition(philo))
 		return ;
 	pick_forks(philo);
-	if (philo->data->dead)
+	if (check_condition(philo))
 	{
-		pthread_mutex_unlock(philo->r_fork);
 		pthread_mutex_unlock(philo->l_fork);
+		pthread_mutex_unlock(philo->r_fork);
 		return ;
 	}
 	pthread_mutex_lock(&philo->lock);
@@ -71,8 +71,7 @@ void	eat(t_philo *philo)
 		pthread_mutex_unlock(&philo->data->lock);
 	}
 	pthread_mutex_unlock(&philo->lock);
-	ft_usleep(philo->data->eat_time);
-	pthread_mutex_unlock(philo->r_fork);
 	pthread_mutex_unlock(philo->l_fork);
-	return ;
+	pthread_mutex_unlock(philo->r_fork);
+	ft_usleep(philo->data->eat_time);
 }

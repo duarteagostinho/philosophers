@@ -1,0 +1,28 @@
+#!/bin/bash
+
+# Simple script to count how many times each philosopher has eaten
+# Usage: ./count_eats [philo_nr] [time_to_die] [time_to_eat] [time_to_sleep] [optional_meals]
+
+if [ $# -lt 4 ]; then
+    echo "Usage: $0 [philo_nr] [time_to_die] [time_to_eat] [time_to_sleep] [optional_meals]"
+    exit 1
+fi
+
+PHILO_NR=$1
+TIME_TO_DIE=$2
+TIME_TO_EAT=$3
+TIME_TO_SLEEP=$4
+MEALS=$5
+
+# Run the program and capture output
+if [ -n "$MEALS" ]; then
+    OUTPUT=$(timeout 10s ./philo/philo $PHILO_NR $TIME_TO_DIE $TIME_TO_EAT $TIME_TO_SLEEP $MEALS 2>&1)
+else
+    OUTPUT=$(timeout 5s ./philo/philo $PHILO_NR $TIME_TO_DIE $TIME_TO_EAT $TIME_TO_SLEEP 2>&1)
+fi
+
+# Count meals for each philosopher
+for ((i=1; i<=PHILO_NR; i++)); do
+    count=$(echo "$OUTPUT" | grep "$i is eating" | wc -l)
+    echo "Philo $i: $count meals"
+done

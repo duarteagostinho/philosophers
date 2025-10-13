@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   philo.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: duandrad <duandrad@student.42lisboa.com>   +#+  +:+       +#+        */
+/*   By: duandrad <duandrad@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/03/19 20:01:06 by duandrad          #+#    #+#             */
-/*   Updated: 2025/03/25 20:19:20 by duandrad         ###   ########.fr       */
+/*   Created: 2025/10/13 15:50:55 by duandrad          #+#    #+#             */
+/*   Updated: 2025/10/13 15:50:55 by duandrad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,8 +18,7 @@
 # include <stdlib.h>
 # include <pthread.h>
 # include <sys/time.h>
-# include <stdbool.h>
-# include <string.h>
+
 
 struct	s_data;
 
@@ -27,12 +26,9 @@ typedef struct s_philo
 {
 	int					id;
 	int					eat_cont;
-	int					status;
-	int					eating;
 	size_t				last_meal;
 	size_t				time_to_die;
 	struct s_data		*data;
-	pthread_t			thread;
 	pthread_mutex_t		lock;
 	pthread_mutex_t		*r_fork;
 	pthread_mutex_t		*l_fork;
@@ -57,8 +53,6 @@ typedef struct s_data
 
 /*UTILS*/
 int			ft_atoi(char *str);
-int			ft_strlen(char *str);
-int			ft_isdigit(char c);
 int			checker(int ac, char **av);
 size_t		get_time(void);
 void		print_message(char *message, t_philo *philo);
@@ -74,5 +68,6 @@ void		eat(t_philo *philo);
 int			init_all(int ac, char **av, t_data *data);
 void		*routine(void *pt);
 int			thread_init(t_data *data);
+void		ft_free(t_data *data, int flag);
 
 #endif

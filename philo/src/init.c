@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: duandrad <duandrad@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: duandrad <duandrad@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/24 17:25:12 by gloryboydud       #+#    #+#             */
-/*   Updated: 2025/08/20 11:33:04 by duandrad         ###   ########.fr       */
+/*   Updated: 2025/10/13 15:36:25 by duandrad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,10 +40,10 @@ int	alloc_structs(t_data *data)
 		return (1);
 	data->forks = malloc(sizeof(pthread_mutex_t) * data->philo_num);
 	if (!data->forks)
-		return (1);
+		return (2);
 	data->philos = malloc(sizeof(t_philo) * data->philo_num);
 	if (!data->philos)
-		return (1);
+		return (3);
 	return (0);
 }
 
@@ -79,8 +79,6 @@ void	init_philos(t_data *data)
 		data->philos[i].id = i + 1;
 		data->philos[i].time_to_die = data->death_time;
 		data->philos[i].eat_cont = 0;
-		data->philos[i].eating = 0;
-		data->philos[i].status = 0;
 		pthread_mutex_init(&data->philos[i].lock, NULL);
 		i++;
 	}
@@ -88,13 +86,18 @@ void	init_philos(t_data *data)
 
 int	init_all(int ac, char **av, t_data *data)
 {
+	int	failed_alloc;
+
+	failed_alloc = 0;
 	if (init_data(ac, av, data))
 	{
 		ft_putstr("Error: Init data\n");
 		return (1);
 	}
-	if (alloc_structs(data))
+	failed_alloc = alloc_structs(data);
+	if (failed_alloc)
 	{
+		ft_free(data, failed_alloc);
 		ft_putstr("Error: Allocating structs\n");
 		return (1);
 	}
