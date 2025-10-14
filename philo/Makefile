@@ -1,3 +1,4 @@
+.SILENT:
 NAME = philo
 SRCS = utils/utils.c utils/utils2.c src/check.c src/init.c src/main.c src/mods.c src/actions.c
 OBJS = $(SRCS:.c=.o)

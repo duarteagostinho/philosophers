@@ -80,11 +80,15 @@ void	*routine(void *pt)
 	while (philo->data->dead == 0)
 	{
 		eat(philo);
+		if (check_condition(philo))
+			return ((void *) 0);
 		if (philo->data->meals_nb != -1 && philo->eat_cont
 			>= philo->data->meals_nb)
 			break ;
 		print_message("is sleeping", philo);
 		ft_usleep(philo->data->sleep_time);
+		if (check_condition(philo))
+			return ((void *) 0);
 		print_message("is thinking", philo);
 	}
 	return ((void *) 0);

@@ -12,7 +12,7 @@
 
 #include "../philo.h"
 
-static int	check_condition(t_philo *philo)
+int	check_condition(t_philo *philo)
 {
 	if (philo->data->meals_nb != -1)
 	{
@@ -71,7 +71,7 @@ void	eat(t_philo *philo)
 		pthread_mutex_unlock(&philo->data->lock);
 	}
 	pthread_mutex_unlock(&philo->lock);
+	ft_usleep(philo->data->eat_time);
 	pthread_mutex_unlock(philo->l_fork);
 	pthread_mutex_unlock(philo->r_fork);
-	ft_usleep(philo->data->eat_time);
 }

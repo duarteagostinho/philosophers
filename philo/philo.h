@@ -19,7 +19,6 @@
 # include <pthread.h>
 # include <sys/time.h>
 
-
 struct	s_data;
 
 typedef struct s_philo
@@ -37,9 +36,9 @@ typedef struct s_philo
 typedef struct s_data
 {
 	int					philo_num;
-	unsigned int		death_time;
-	unsigned int		eat_time;
-	unsigned int		sleep_time;
+	int					death_time;
+	int					eat_time;
+	int					sleep_time;
 	int					meals_nb;
 	int					dead;
 	int					finished;
@@ -69,5 +68,5 @@ int			init_all(int ac, char **av, t_data *data);
 void		*routine(void *pt);
 int			thread_init(t_data *data);
 void		ft_free(t_data *data, int flag);
-
+int			check_condition(t_philo *philo);
 #endif

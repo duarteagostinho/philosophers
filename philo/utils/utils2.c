@@ -27,7 +27,7 @@ void	ft_usleep(size_t ms)
 
 	start = get_time();
 	while ((get_time() - start) < ms)
-		usleep(ms);
+		usleep(500);
 }
 
 void	print_message(char *message, t_philo *philo)
