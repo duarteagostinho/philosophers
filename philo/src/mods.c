@@ -6,7 +6,7 @@
 /*   By: duandrad <duandrad@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/25 20:04:41 by duandrad          #+#    #+#             */
-/*   Updated: 2025/10/13 15:45:47 by duandrad         ###   ########.fr       */
+/*   Updated: 2025/10/16 15:28:36 by duandrad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,31 +67,44 @@ void	*monitor(void *pt)
 	return (NULL);
 }
 
+int	should_exit(t_philo *philo)
+{
+	pthread_mutex_lock(&philo->data->lock);
+	if (philo->data->dead)
+	{
+		pthread_mutex_unlock(&philo->data->lock);
+		return (1);
+	}
+	pthread_mutex_unlock(&philo->data->lock);
+	return (0);
+}
+
 void	*routine(void *pt)
 {
 	t_philo	*philo;
 
 	philo = (t_philo *)pt;
-	if (philo->id % 2 == 0)
-		ft_usleep(1);
 	pthread_mutex_lock(&philo->lock);
 	philo->last_meal = get_time();
 	pthread_mutex_unlock(&philo->lock);
-	while (philo->data->dead == 0)
+	while (!should_exit(philo))
 	{
-		eat(philo);
-		if (check_condition(philo))
-			return ((void *) 0);
-		if (philo->data->meals_nb != -1 && philo->eat_cont
-			>= philo->data->meals_nb)
-			break ;
-		print_message("is sleeping", philo);
-		ft_usleep(philo->data->sleep_time);
-		if (check_condition(philo))
-			return ((void *) 0);
-		print_message("is thinking", philo);
+		if (!meals_completed(philo))
+		{
+			eat(philo);
+			print_message("is sleeping", philo);
+			ft_usleep(philo->data->sleep_time);
+			print_message("is thinking", philo);
+		}
+		else
+		{
+			pthread_mutex_lock(&philo->lock);
+			philo->last_meal = get_time();
+			pthread_mutex_unlock(&philo->lock);
+			ft_usleep(10);
+		}
 	}
-	return ((void *) 0);
+	return (NULL);
 }
 
 int	thread_init(t_data *data)

@@ -60,8 +60,9 @@ void		ft_putstr(char *str);
 void		ft_exit(t_data *data);
 
 /* ACTIONS */
-void		pick_forks(t_philo *philo);
+int			pick_forks(t_philo *philo);
 void		eat(t_philo *philo);
+int			meals_completed(t_philo *philo);
 
 /*INIT*/
 int			init_all(int ac, char **av, t_data *data);
@@ -69,4 +70,5 @@ void		*routine(void *pt);
 int			thread_init(t_data *data);
 void		ft_free(t_data *data, int flag);
 int			check_condition(t_philo *philo);
+int			should_exit(t_philo *philo);
 #endif
