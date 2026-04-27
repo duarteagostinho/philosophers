@@ -173,5 +173,5 @@ Philo 5: 7 meals
 
 ## 👤 Author
 
-**Duarte Andrade** — [duandrad@student.42lisboa.com](mailto:duandrad@student.42lisboa.com)  
+**Duarte Agostinho** — [duandrad@student.42lisboa.com](mailto:duandrad@student.42lisboa.com)  
 *42 Lisboa*
